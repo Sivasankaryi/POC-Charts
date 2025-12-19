@@ -1,0 +1,22 @@
+<highcharts-chart
+  [Highcharts]="Highcharts"
+  [options]="chartOptions"
+  style="width:100%; height:400px; display:block">
+</highcharts-chart>
+
+<table border="1" width="100%" style="margin-top:20px">
+  <thead>
+    <tr>
+      <th>Region</th>
+      <th>RX Discard</th>
+      <th>TX Discard</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of tableData">
+      <td>{{ row.name }}</td>
+      <td>{{ row.rxDis }}</td>
+      <td>{{ row.txDis }}</td>
+    </tr>
+  </tbody>
+</table>
