@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -12,80 +11,171 @@ import { HighchartsChartModule } from 'highcharts-angular';
   templateUrl: './columnseries.component.html',
   styleUrls: ['./columnseries.component.css']
 })
-export class ColumnseriesComponent {
+export class ColumnseriesComponent implements OnInit {
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions!: Highcharts.Options;
-  tableData: any[] = [];
 
-  constructor(
-    private http: HttpClient,
-    private router: Router   
-  ) {}
+  tableData: any[] = [];
+  pagedData: any[] = [];
+  pageSize = 5;
+  currentPage = 1;
+  totalPages = 0;
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('assets/column.json').subscribe(res => {
+    fetch('assets/column.json')
+      .then(res => res.json())
+      .then(res => {
+        this.tableData = res;
+        this.totalPages = Math.ceil(this.tableData.length / this.pageSize);
+        this.updatePage();
 
-      const data = res.filter(r => !r.isDeleted);
-      this.tableData = data;
+        this.prepareChart(res);
+      });
+  }
 
-      const categories = data.map(r => r.name);
-      const rxData = data.map(r => r.rxDis ?? 0);
-      const txData = data.map(r => r.txDis ?? 0);
+  prepareChart(data: any[]) {
+    const categories = data.map(d => d.name);
 
-      this.chartOptions = {
-        chart: {
-          type: 'column',
-          height: 400
-        },
-        title: {
-          text: 'Packets Discarded By Region'
-        },
-        xAxis: {
-          categories,
-          labels: { rotation: -45 }
-        },
-        yAxis: {
-          min: 0,
-          title: { text: 'Discarded Count' }
-        },
-        tooltip: {
-          shared: true
-        },
-        series: [
-          {
-            name: 'Received Discarded Packets',
-            type: 'column',
-            data: rxData,
-            point: {
-              events: {
-                click: (e: any) => {
-                  const region = e.point.category;
-                  this.goToDetails(region);
-                }
-              }
-            }
-          },
-          {
-            name: 'Transmitted Discarded Packets',
-            type: 'column',
-            data: txData,
-            point: {
-              events: {
-                click: (e: any) => {
-                  const region = e.point.category;
-                  this.goToDetails(region);
-                }
-              }
-            }
+const rxData = data.map(d => ({
+  y: d.rxDis ?? 0,
+  name: d.name,
+  id: d.id,
+  isDeleted: d.isDeleted,
+  color: d.isDeleted ? '#cccccc' : undefined
+}));
+
+const txData = data.map(d => ({
+  y: d.txDis ?? 0,
+  name: d.name,
+  id: d.id,
+  isDeleted: d.isDeleted,
+  color: d.isDeleted ? '#cccccc' : undefined
+}));
+    this.chartOptions = {
+      chart: {
+        type: 'column',
+        height: 400,
+        scrollablePlotArea: {
+          minWidth: categories.length * 120,
+          scrollPositionX: 0
+        }
+      },
+      title: {
+        text: 'Packets Discarded By Region'
+      },
+      xAxis: {
+        categories,
+        scrollbar: { enabled: true }
+      },
+      yAxis: {
+        min: 0,
+        title: { text: 'Discarded Count' }
+      },
+      tooltip: {
+        formatter: function () {
+          if ((this.point as any).isDeleted) {
+            return `<b>${this.x}</b><br/>Status: Deleted`;
           }
-        ],
-        credits: { enabled: false }
-      };
-    });
+          return `<b>${this.x}</b><br/>Value: ${this.y}`;
+        }
+      },
+   plotOptions: {
+  column: {
+    point: {
+      events: {
+        mouseOver: function () {
+          const chartEl = this.series.chart.container;
+
+          if ((this as any).isDeleted) {
+            chartEl.style.cursor = 'url(assets/block.png), not-allowed';
+          } else {
+            chartEl.style.cursor = 'pointer';
+          }
+        },
+        mouseOut: function () {
+          this.series.chart.container.style.cursor = 'default';
+        },
+        click: function () {
+          if ((this as any).isDeleted) {
+            return;
+          }
+
+          const id = (this as any).id;
+          const name = (this as any).name;
+
+          window.location.href =
+            `/region-details/${id}?name=${encodeURIComponent(name)}`;
+        }
+      }
+    }
+  }
+}
+,
+      series: [
+        {
+          name: 'Received Discarded Packets',
+          type: 'column',
+          data: rxData
+        },
+        {
+          name: 'Transmitted Discarded Packets',
+          type: 'column',
+          data: txData
+        }
+      ],
+      credits: { enabled: false }
+    };
   }
 
-  goToDetails(region: string) {
-    this.router.navigate(['/region-details', region]);
+  updatePage(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedData = this.tableData.slice(start, end);
   }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePage();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePage();
+    }
+  }
+
+  sortBy(column: string): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    this.tableData.sort((a, b) => {
+      const valA = a[column];
+      const valB = b[column];
+
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    this.updatePage();
+  }
+
+goToDetails(id: string, name: string): void {
+  this.router.navigate(
+    ['/region-details', id],
+    { queryParams: { name } }
+  );
+}
 }

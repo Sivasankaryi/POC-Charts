@@ -11,41 +11,41 @@
         "groupBy": "REGION",
         "id": "d4451550-5c23-48f9-bd7a-4d35cccfa465",
         "name": "ctm_314050-2025-09-10-03:57:52.064810",
-        "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "isDeleted": true,
+        "txDis": 100,
+        "rxDis": 1000
     },
     {
         "groupBy": "REGION",
         "id": "0219e067-db24-4290-9235-2707f005900b",
         "name": "ctm_314050-2025-10-23-00:33:55.608716",
-        "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "isDeleted": true,
+        "txDis": 200,
+        "rxDis": 400
     },
     {
         "groupBy": "REGION",
         "id": "8015edf1-4ed6-43db-a552-0b6cf283639e",
         "name": "region1",
         "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "txDis": 100,
+        "rxDis": 3000
     },
     {
         "groupBy": "REGION",
         "id": "8959fbdf-6ee9-4138-bb34-2de72dbef40f",
         "name": "cxvb",
         "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "txDis": 200,
+        "rxDis": 40
     },
     {
         "groupBy": "REGION",
         "id": "f2afd5f5-f864-406a-8e91-6fca45d537e1",
         "name": "ctm_314050-2025-10-20-02:22:24.889022",
-        "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "isDeleted": true,
+        "txDis": 500,
+        "rxDis": 20
     },
     {
         "groupBy": "REGION",
@@ -59,7 +59,7 @@
         "groupBy": "REGION",
         "id": "7e719cee-a36a-498c-ac09-4f34150f3432",
         "name": "ctm_314050-2025-10-13-04:44:08.439315",
-        "isDeleted": false,
+        "isDeleted": true,
         "txDis": 0,
         "rxDis": 0
     },
@@ -75,7 +75,7 @@
         "groupBy": "REGION",
         "id": "58c39a0a-e00f-410c-b8da-602621bb9dc8",
         "name": "ctm_314050-2025-10-22-00:32:36.093012",
-        "isDeleted": false,
+        "isDeleted": true,
         "txDis": 0,
         "rxDis": 0
     },
@@ -107,7 +107,7 @@
         "groupBy": "REGION",
         "id": "59778fe2-aaeb-4e36-b7bc-a6e1bf455d7a",
         "name": "ctm_314050-2025-10-15-02:23:18.138614",
-        "isDeleted": false,
+        "isDeleted": true,
         "txDis": 0,
         "rxDis": 0
     },
@@ -131,9 +131,9 @@
         "groupBy": "REGION",
         "id": "5dc0c84a-f05a-490b-96dc-ed7d851a539d",
         "name": "Reg1",
-        "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "isDeleted": true,
+        "txDis": 50,
+        "rxDis": 50
     },
     {
         "groupBy": "REGION",
@@ -155,9 +155,9 @@
         "groupBy": "REGION",
         "id": "31fc3a16-390e-4414-94e6-9ce85499334d",
         "name": "India",
-        "isDeleted": false,
-        "txDis": 0.0,
-        "rxDis": 26.0
+        "isDeleted": true,
+        "txDis": 100,
+        "rxDis": 260.0
     },
     {
         "groupBy": "REGION",
@@ -187,7 +187,7 @@
         "groupBy": "REGION",
         "id": "d8e8c4f0-b103-46f8-9cdb-c9173a6dd5d8",
         "name": "ctm_314050-2025-10-08-03:22:19.638378",
-        "isDeleted": false,
+        "isDeleted": true,
         "txDis": 0,
         "rxDis": 0
     },
@@ -203,9 +203,9 @@
         "groupBy": "REGION",
         "id": "cc9eb265-38dd-4af6-8e74-fd1906a56806",
         "name": "ctm_314050-2025-09-11-03:50:06.735119",
-        "isDeleted": false,
-        "txDis": 0,
-        "rxDis": 0
+        "isDeleted": true,
+        "txDis": 50,
+        "rxDis": 50
     },
     {
         "groupBy": "REGION",
@@ -267,7 +267,7 @@
         "groupBy": "REGION",
         "id": "0bd33f06-0c55-455c-af31-485502febf5f",
         "name": "ctm_314050-2025-09-25-04:30:16.920064",
-        "isDeleted": false,
+        "isDeleted": true,
         "txDis": 50,
         "rxDis": 0
     },

@@ -21,13 +21,14 @@ export class DetailsComponent {
     private http: HttpClient
   ) {}
 
-  ngOnInit() {
-    this.regionName = this.route.snapshot.paramMap.get('region')!;
+ngOnInit() {
+  const regionId = this.route.snapshot.paramMap.get('id');
+  this.regionName = this.route.snapshot.queryParamMap.get('name') || '';
 
-    this.http.get<any[]>('assets/column.json').subscribe(res => {
-      this.regionData = res.find(r => r.name === this.regionName);
-    });
-  }
+  this.http.get<any[]>('assets/column.json').subscribe(res => {
+    this.regionData = res.find(r => r.id === regionId);
+  });
+}
 
   close() {
     this.router.navigate(['/']);
