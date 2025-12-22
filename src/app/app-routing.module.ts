@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },   
   { path: 'timechart', component: TimechartComponent },
   { path: 'columnchart', component: ColumnseriesComponent },
-  { path: 'region-details/:region', component: DetailsComponent }
+  { path: 'region-details/:id', component: DetailsComponent }
 ];
 
 @NgModule({

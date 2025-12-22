@@ -1,13 +1,18 @@
-<div style="padding:20px">
+<div style="padding:20px; font-family:Arial, sans-serif">
 
-  <div style="display:flex; justify-content:space-between">
-    <h2>{{ regionName }} Details</h2>
-    <button (click)="close()">X</button>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
+    <h2 style="margin:0">{{ regionName }} Details</h2>
+    <button (click)="close()" 
+            style="cursor:pointer; padding:5px 10px; font-size:16px; border:none; background:#eee; border-radius:3px">
+      X
+    </button>
   </div>
-
-  <div *ngIf="regionData" style="margin-top:20px; border:1px solid #ccc; padding:15px">
+  <div *ngIf="regionData" 
+       style="margin-top:10px; border:1px solid #ccc; padding:15px; border-radius:5px; background:#f9f9f9">
     <p><b>Received Discarded Packets:</b> {{ regionData.rxDis }}</p>
     <p><b>Transmitted Discarded Packets:</b> {{ regionData.txDis }}</p>
   </div>
-
+  <div *ngIf="!regionData" style="margin-top:20px; color:#888">
+    No data available for this region.
+  </div>
 </div>

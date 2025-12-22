@@ -28,7 +28,7 @@ table {
 }
 
 thead {
-  background-color: #4CAF50;
+  background-color: #4d4d4d;
   color: white;
 }
 
@@ -41,7 +41,7 @@ thead th {
 tbody td {
   padding: 12px;
   border-bottom: 1px solid #e0e0e0;
-  color: #333;
+  color: #333333;
 }
 
 tbody tr:nth-child(even) {
@@ -82,3 +82,94 @@ tbody tr:hover {
     text-align: left;
   }
 }
+
+
+.disabled-text {
+  color: red;
+  font-weight: bold;
+}
+.disabled-row {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.disabled-row:hover {
+  background-color: #f5f5f5;
+}
+
+.disable-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: not-allowed;
+}
+
+.active-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.active-btn:hover {
+  color: #1976d2;
+}
+
+tbody tr {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+tbody tr:hover:not(.disabled-row) {
+  background-color: #f5f5f5;
+}
+
+/* Disabled rows */
+tbody tr.disabled-row {
+  background-color: #ffcece; 
+  color: #ffcece;
+  cursor: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 32 32'>\
+<circle cx='16' cy='16' r='14' stroke='red' stroke-width='3' fill='white'/>\
+<line x1='8' y1='24' x2='24' y2='8' stroke='red' stroke-width='3'/>\
+</svg>") 16 16, not-allowed;
+}
+
+/* Prevent hover color change on disabled rows */
+tbody tr.disabled-row:hover {
+  background-color: #e0e0e0;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pagination button {
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Disabled rows */
+tbody tr.disabled-row {
+  background-color: #ffdede;
+  color: #9f9f9f;
+  cursor: default;
+}
+
+tbody tr.disabled-row:hover {
+  cursor: url("/assets/block.png") 16 16, not-allowed;
+}
+
+
+
+
+

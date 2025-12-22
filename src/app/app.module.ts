@@ -11,8 +11,7 @@ import { DetailsComponent } from './component/details/details.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-  ],
+    HomeComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
