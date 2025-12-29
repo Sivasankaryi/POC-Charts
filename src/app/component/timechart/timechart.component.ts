@@ -62,7 +62,6 @@ export class TimechartComponent {
         } as Highcharts.ChartOptions,
 
         title: { text: 'Time Series Chart' },
-// visibility over angular state
         plotOptions: {
           series: {
             events: {
