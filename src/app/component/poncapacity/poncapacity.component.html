@@ -1,0 +1,39 @@
+<div class="top-bar">
+  <span class="close-btn" (click)="goBackToHealth()">✕</span>
+</div>
+
+<h2>PON Capacity Hits</h2>
+
+<table id="ponTable" class="display" border="1" width="100%">
+  <thead>
+    <tr>
+      <th>System Name</th>
+      <th>Interface</th>
+      <th>Region / Location</th>
+      <th>Upstream Hit</th>
+      <th>Downstream Hit</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let row of tableData">
+      <td>
+        <span class="clickable-link"
+              (click)="goToDetails('SYSTEM', row.systemName, row.systemId)">
+          {{ row.systemName }}
+        </span>
+      </td>
+      <td>
+        <span class="clickable-link"
+              (click)="goToDetails('INTERFACE', row.interface, row.systemId)">
+          {{ row.interface }}
+        </span>
+      </td>
+
+      <td>{{ row.regionName }} / {{ row.locationName }}</td>
+      <td>{{ row.usUtilExCnt }}</td>
+      <td>{{ row.dsUtilExCnt }}</td>
+
+    </tr>
+  </tbody>
+</table>

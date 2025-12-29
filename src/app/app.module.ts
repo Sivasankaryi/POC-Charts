@@ -7,16 +7,24 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { HomeComponent } from './component/home/home.component';
 import { ColumnseriesComponent } from './component/columnseries/columnseries.component';
 import { DetailsComponent } from './component/details/details.component';
+import { PoncapacityComponent } from './component/poncapacity/poncapacity.component';
+import { PondetailsComponent } from './component/pondetails/pondetails.component';
+import { RoutesdetailsComponent } from './component/routesdetails/routesdetails.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent  ],
+    HomeComponent,
+    PoncapacityComponent,
+    PondetailsComponent,
+    RoutesdetailsComponent,  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

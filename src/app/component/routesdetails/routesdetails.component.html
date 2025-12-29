@@ -1,0 +1,42 @@
+<h2 *ngIf="type === 'PON'">PON Details</h2>
+<h2 *ngIf="type === 'REGION'">Region Details</h2>
+
+<div *ngIf="data">
+
+  <div *ngIf="type === 'PON'">
+    <div class="backdrop">
+  <div class="modal-box">
+    <p><b>System:</b> {{data.systemName}}</p>
+    <p><b>Interface:</b> {{data.interface}}</p>
+    <p><b>Region:</b> {{data.regionName}}</p>
+    <p><b>Location:</b> {{data.locationName}}</p>
+    <p><b>Upstream:</b> {{data.usUtilExCnt}}</p>
+    <p><b>Downstream:</b> {{data.dsUtilExCnt}}</p>
+ <button (click)="close()">Close</button>
+  </div>
+</div>
+  </div>
+
+  <div *ngIf="type === 'REGION'">
+<div style="padding:20px; font-family:Arial, sans-serif">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
+    <h2 style="margin:0">{{data.name}} Details</h2>
+    <button (click)="close()" 
+            style="cursor:pointer; padding:5px 10px; font-size:16px; border:none; background:#eee; border-radius:3px">
+      X
+    </button>
+  </div>
+  <div *ngIf="data" 
+       style="margin-top:10px; border:1px solid #ccc; padding:15px; border-radius:5px; background:#f9f9f9">
+    <p><b>Received Discarded Packets:</b> {{data.rxDis}}</p>
+    <p><b>Transmitted Discarded Packets:</b> {{data.txDis}}</p>
+  </div>
+  <div *ngIf="!data" style="margin-top:20px; color:#888">
+    No data available for this region.
+  </div>
+</div>
+
+
+  </div>
+
+</div>

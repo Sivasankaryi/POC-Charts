@@ -23,8 +23,9 @@ export class ColumnseriesComponent implements OnInit {
   totalPages = 0;
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+  chatIsLoaded: boolean =  false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     fetch('assets/column.json')
@@ -33,7 +34,6 @@ export class ColumnseriesComponent implements OnInit {
         this.tableData = res;
         this.totalPages = Math.ceil(this.tableData.length / this.pageSize);
         this.updatePage();
-
         this.prepareChart(res);
       });
   }
@@ -41,21 +41,23 @@ export class ColumnseriesComponent implements OnInit {
   prepareChart(data: any[]) {
     const categories = data.map(d => d.name);
 
-const rxData = data.map(d => ({
-  y: d.rxDis ?? 0,
-  name: d.name,
-  id: d.id,
-  isDeleted: d.isDeleted,
-  color: d.isDeleted ? '#cccccc' : undefined
-}));
+    const rxData = data.map(d => ({
+      y: d.rxDis ?? 0,
+      name: d.name,
+      id: d.id,
+      isDeleted: d.isDeleted,
+      color: d.isDeleted ? '#cccccc' : undefined
+    }));
 
-const txData = data.map(d => ({
-  y: d.txDis ?? 0,
-  name: d.name,
-  id: d.id,
-  isDeleted: d.isDeleted,
-  color: d.isDeleted ? '#cccccc' : undefined
-}));
+    const txData = data.map(d => ({
+      y: d.txDis ?? 0,
+      name: d.name,
+      id: d.id,
+      isDeleted: d.isDeleted,
+      color: d.isDeleted ? '#cccccc' : undefined
+    }));
+
+        setTimeout(() => {
     this.chartOptions = {
       chart: {
         type: 'column',
@@ -84,38 +86,38 @@ const txData = data.map(d => ({
           return `<b>${this.x}</b><br/>Value: ${this.y}`;
         }
       },
-   plotOptions: {
-  column: {
-    point: {
-      events: {
-        mouseOver: function () {
-          const chartEl = this.series.chart.container;
+      plotOptions: {
+        column: {
+          point: {
+            events: {
+              mouseOver: function () {
+                const chartEl = this.series.chart.container;
 
-          if ((this as any).isDeleted) {
-            chartEl.style.cursor = 'url(assets/block.png), not-allowed';
-          } else {
-            chartEl.style.cursor = 'pointer';
+                if ((this as any).isDeleted) {
+                  chartEl.style.cursor = 'url(assets/block.png), not-allowed';
+                } else {
+                  chartEl.style.cursor = 'pointer';
+                }
+              },
+              mouseOut: function () {
+                this.series.chart.container.style.cursor = 'default';
+              },
+              click: function () {
+                if ((this as any).isDeleted) {
+                  return;
+                }
+
+                const id = (this as any).id;
+                const name = (this as any).name;
+
+                window.location.href =
+                  `/region-details/${id}`;
+              }
+            }
           }
-        },
-        mouseOut: function () {
-          this.series.chart.container.style.cursor = 'default';
-        },
-        click: function () {
-          if ((this as any).isDeleted) {
-            return;
-          }
-
-          const id = (this as any).id;
-          const name = (this as any).name;
-
-          window.location.href =
-            `/region-details/${id}?name=${encodeURIComponent(name)}`;
         }
       }
-    }
-  }
-}
-,
+      ,
       series: [
         {
           name: 'Received Discarded Packets',
@@ -126,10 +128,12 @@ const txData = data.map(d => ({
           name: 'Transmitted Discarded Packets',
           type: 'column',
           data: txData
-        }
+        },
       ],
       credits: { enabled: false }
     };
+    this.chatIsLoaded = true;
+  }, 500);
   }
 
   updatePage(): void {
@@ -172,10 +176,7 @@ const txData = data.map(d => ({
     this.updatePage();
   }
 
-goToDetails(id: string, name: string): void {
-  this.router.navigate(
-    ['/region-details', id],
-    { queryParams: { name } }
-  );
-}
+  goToDetails(id: string, name: string): void {
+    this.router.navigate(['/routesdetails', 'REGION', id]);
+  }
 }

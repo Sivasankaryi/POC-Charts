@@ -23,14 +23,16 @@ export class DetailsComponent {
 
 ngOnInit() {
   const regionId = this.route.snapshot.paramMap.get('id');
-  this.regionName = this.route.snapshot.queryParamMap.get('name') || '';
-
-  this.http.get<any[]>('assets/column.json').subscribe(res => {
+this.http.get<any[]>('assets/column.json').subscribe(res => {
     this.regionData = res.find(r => r.id === regionId);
+
+    if (this.regionData) {
+      this.regionName = this.regionData.name;
+    }
   });
 }
 
   close() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/columnchart']);
   }
 }
